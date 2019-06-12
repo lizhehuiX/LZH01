@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.bw.entity.Goods" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="b_id" property="bId" jdbcType="INTEGER" />
+    <result column="gk_is" property="gkIs" jdbcType="INTEGER" />
+    <result column="size" property="size" jdbcType="INTEGER" />
+    <result column="privce" property="privce" jdbcType="DOUBLE" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+  </resultMap>
+
+  
+  <select id="getGoodsList" resultType="map">
+  	select a.*,b.bname,c.gk_name from t_goods a 
+  	LEFT JOIN t_brand b on a.b_id=b.bid 
+	LEFT JOIN t_goodskind c on a.gk_id=c.gk_id
+	where a.gname like '%%'
+  </select>
+  
+  <sql id="Base_Column_List" >
+    gid, gname, b_id, gk_is, size, privce, count, tag, img
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bw.entity.Goods" >
+    insert into t_goods (gid, gname, b_id, 
+      gk_is, size, privce, 
+      count, tag, img)
+    values (#{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, #{bId,jdbcType=INTEGER}, 
+      #{gkIs,jdbcType=INTEGER}, #{size,jdbcType=INTEGER}, #{privce,jdbcType=DOUBLE}, 
+      #{count,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.entity.Goods" >
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="bId != null" >
+        b_id,
+      </if>
+      <if test="gkIs != null" >
+        gk_is,
+      </if>
+      <if test="size != null" >
+        size,
+      </if>
+      <if test="privce != null" >
+        privce,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="bId != null" >
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="gkIs != null" >
+        #{gkIs,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="privce != null" >
+        #{privce,jdbcType=DOUBLE},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.entity.Goods" >
+    update t_goods
+    <set >
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="bId != null" >
+        b_id = #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="gkIs != null" >
+        gk_is = #{gkIs,jdbcType=INTEGER},
+      </if>
+      <if test="size != null" >
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="privce != null" >
+        privce = #{privce,jdbcType=DOUBLE},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.entity.Goods" >
+    update t_goods
+    set gname = #{gname,jdbcType=VARCHAR},
+      b_id = #{bId,jdbcType=INTEGER},
+      gk_is = #{gkIs,jdbcType=INTEGER},
+      size = #{size,jdbcType=INTEGER},
+      privce = #{privce,jdbcType=DOUBLE},
+      count = #{count,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>

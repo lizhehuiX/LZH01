@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bw.mapper.GoodsKindMapper" >
+  <resultMap id="BaseResultMap" type="com.bw.entity.GoodsKind" >
+    <id column="gk_id" property="gkId" jdbcType="INTEGER" />
+    <result column="gk_name" property="gkName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    gk_id, gk_name
+  </sql>
+    <select id="getGKList" resultType="map">
+  	select * from t_goodskind 
+ 	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodskind
+    where gk_id = #{gkId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_goodskind
+    where gk_id = #{gkId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bw.entity.GoodsKind" >
+    insert into t_goodskind (gk_id, gk_name)
+    values (#{gkId,jdbcType=INTEGER}, #{gkName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bw.entity.GoodsKind" >
+    insert into t_goodskind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gkId != null" >
+        gk_id,
+      </if>
+      <if test="gkName != null" >
+        gk_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gkId != null" >
+        #{gkId,jdbcType=INTEGER},
+      </if>
+      <if test="gkName != null" >
+        #{gkName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bw.entity.GoodsKind" >
+    update t_goodskind
+    <set >
+      <if test="gkName != null" >
+        gk_name = #{gkName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gk_id = #{gkId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bw.entity.GoodsKind" >
+    update t_goodskind
+    set gk_name = #{gkName,jdbcType=VARCHAR}
+    where gk_id = #{gkId,jdbcType=INTEGER}
+  </update>
+</mapper>
